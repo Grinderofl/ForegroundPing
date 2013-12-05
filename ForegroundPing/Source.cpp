@@ -129,7 +129,9 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hinstPrev,
 	HRGN thisRgn;
 	holeRgn = CreateRectRgn(0, 0, 0, 0);
 	windowRgn = CreateRectRgn(0, 0, windowRect.right, windowRect.bottom);
-	thisRgn = CreateRectRgn(50, 50, windowRect.right - 50, windowRect.bottom - 50);
+	
+	//thisRgn = CreateEllipticRgn(50, 50, windowRect.right - 50, windowRect.bottom - 50);
+	thisRgn = CreateRoundRectRgn(50, 50, windowRect.right - 50, windowRect.bottom - 50, 50, 50);
 	CombineRgn(holeRgn, thisRgn, windowRgn, RGN_XOR);
 	SetWindowRgn(hWnd, holeRgn, TRUE);
 	
