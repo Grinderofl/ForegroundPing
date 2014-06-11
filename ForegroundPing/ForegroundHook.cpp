@@ -80,6 +80,20 @@ ForegroundHook::~ForegroundHook()
 {
 }
 
+HMODULE _hmodule;
+
+
+bool LoadHook()
+{
+	typedef BOOL (*FUNCTION_TYPE)(HWND);
+	FUNCTION_TYPE installHook;
+	_hmodule = LoadLibrary(L"Hooks.dll");
+	if (!_hmodule) return false;
+	installHook = reinterpret_cast<FUNCTION_TYPE>(GetProcAddress(_hmodule, "Hooks::Install"));
+	if (!installHook) return false;
+	//return installHook(_hwnd)
+}
+
 void ForegroundHook::Run()
 {
 	_eventHookHandler.RegisterHandler(EVENT_SYSTEM_SWITCHEND);
