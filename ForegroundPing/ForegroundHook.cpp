@@ -12,7 +12,7 @@
 
 HWND ForegroundHook::_oldWindow;
 static int count = 0;
-static HWND _switchedWindow = NULL;
+static HWND _switchedWindow = nullptr;
 static bool _switching = false;
 
 static void ForegroundChanged(HWND hWnd)
@@ -30,7 +30,7 @@ static void ForegroundChanged(HWND hWnd)
 	else {
 		ForegroundHook::_oldWindow = hWnd;
 	}
-	PlaySound(TEXT("C:\\Windows\\Media\\Speech Misrecognition.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	PlaySound(TEXT("C:\\Windows\\Media\\Speech Misrecognition.wav"), nullptr, SND_FILENAME | SND_ASYNC);
 }
 
 static void SwitchChanged(HWND hwnd)
@@ -66,15 +66,13 @@ void CALLBACK ForegroundHook::WinEventProc(HWINEVENTHOOK hWinEventHook, DWORD ev
 		
 		}
 
-		
-		
 	}
 }
 
-ForegroundHook::ForegroundHook(EventHookHandler handler)
+ForegroundHook::ForegroundHook(EventHookHandler handler, MessageHandler messageHandler)
 {
-	_handler = handler;
-	
+	_eventHookHandler = handler;
+	_messageHandler = messageHandler;
 }
 
 
@@ -84,22 +82,10 @@ ForegroundHook::~ForegroundHook()
 
 void ForegroundHook::Run()
 {
-	_handler.RegisterHandler(EVENT_SYSTEM_SWITCHEND);
-	_handler.RegisterHandler(EVENT_SYSTEM_SWITCHSTART);
-	_handler.RegisterHandler(EVENT_SYSTEM_FOREGROUND);
-
-	//HWINEVENTHOOK hook = SetWinEventHook(EVENT_MIN, EVENT_MAX, NULL, WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
-
-	//hWinEventHook = 
-	//hWinEventHook = SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGROUND, NULL, WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
-	MSG msg;
-	while (GetMessage(&msg, NULL, 0, 0))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-	//if (hWinEventHook) UnhookWinEvent(hWinEventHook);
-	_handler.UnregisterAllHandlers();
-	//UnhookWinEvent(hook);
+	_eventHookHandler.RegisterHandler(EVENT_SYSTEM_SWITCHEND);
+	_eventHookHandler.RegisterHandler(EVENT_SYSTEM_SWITCHSTART);
+	_eventHookHandler.RegisterHandler(EVENT_SYSTEM_FOREGROUND);
+	_messageHandler.Run();
+	_eventHookHandler.UnregisterAllHandlers();
 }
 

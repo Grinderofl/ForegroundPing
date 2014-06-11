@@ -80,10 +80,12 @@
     <ClCompile Include="EventHookHandler.cpp" />
     <ClCompile Include="ForegroundHook.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MessageHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventHookHandler.h" />
     <ClInclude Include="ForegroundHook.h" />
+    <ClInclude Include="MessageHandler.h" />
     <ClInclude Include="Shared.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -13,7 +13,7 @@ EventHookHandler::~EventHookHandler()
 
 void EventHookHandler::RegisterHandler(DWORD event)
 {
-	HWINEVENTHOOK hook = SetWinEventHook(event, event, NULL, ForegroundHook::WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
+	HWINEVENTHOOK hook = SetWinEventHook(event, event, nullptr, ForegroundHook::WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
 	Hooks.push_back(hook);
 }
 
