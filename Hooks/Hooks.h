@@ -10,14 +10,3 @@
 #define HOOKS_API __declspec(dllimport)
 #endif
 
-// This class is exported from the Hooks.dll
-class HOOKS_API CHooks {
-public:
-	CHooks(void);
-	bool Install(HWND notify);
-	bool Uninstall();
-};
-
-extern HOOKS_API int nHooks;
-
-HOOKS_API int fnHooks(void);
