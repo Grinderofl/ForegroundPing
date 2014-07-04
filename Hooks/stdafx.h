@@ -11,7 +11,11 @@
 // Windows Header Files:
 #include <windows.h>
 
-//HINSTANCE _instance = nullptr;
+#ifdef HOOKS_EXPORTS
+#define HOOKS_API __declspec(dllexport)
+#else
+#define HOOKS_API __declspec(dllimport)
+#endif
 
 
 // TODO: reference additional headers your program requires here
